@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "noUncheckedIndexedAccess": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": { "@copy-seller/core": ["packages/core/src/index.ts"], "@copy-seller/core/anthropic": ["packages/core/src/adapters/anthropic.ts"] }
+  },
+  "include": ["packages/*/src", "apps/cli/src", "tests"]
+}

@@ -1,0 +1,25 @@
+{
+  "name": "@copy-seller/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "demo": "cross-env DEMO=1 vite",
+    "build": "tsc --noEmit -p . && vite build"
+  },
+  "dependencies": {
+    "@copy-seller/core": "workspace:*",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "cross-env": "^7.0.3",
+    "tailwindcss": "^4.0.0",
+    "vite": "^5.4.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@copy-seller/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.129.0",
+    "yaml": "^2.5.0",
+    "zod": "^3.23.0"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./anthropic": "./src/adapters/anthropic.ts",
+    "./claude-cli": "./src/adapters/claude-cli.ts"
+  }
+}

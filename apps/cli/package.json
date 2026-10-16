@@ -1,0 +1,13 @@
+{
+  "name": "@copy-seller/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": { "copy-seller": "src/index.ts" },
+  "scripts": { "start": "tsx src/index.ts" },
+  "dependencies": {
+    "@copy-seller/core": "workspace:*",
+    "commander": "^12.1.0"
+  },
+  "devDependencies": { "tsx": "^4.19.0" }
+}

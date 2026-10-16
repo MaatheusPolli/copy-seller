@@ -1,0 +1,18 @@
+{
+  "name": "copy-seller",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:cov": "vitest run --coverage",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p apps/web --noEmit",
+    "cli": "pnpm --filter @copy-seller/cli start"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@vitest/coverage-v8": "^2.1.0",
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  },
+  "packageManager": "pnpm@9.15.9"
+}

@@ -1,0 +1,10 @@
+id: shopee
+title:
+  maxLength: 120
+  forbidden: [whatsapp, link externo]
+description:
+  maxLength: 3000
+  allowHtml: false
+  requiredAttributes: [marca]
+tone: próximo e animado, sem exageros
+synonyms: {}

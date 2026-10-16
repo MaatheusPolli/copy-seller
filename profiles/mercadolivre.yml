@@ -1,0 +1,12 @@
+id: mercadolivre
+title:
+  maxLength: 60
+  mustStartWith: category
+  forbidden: [frete grátis, promoção, oferta, melhor preço, garantia vitalícia, imperdível, original]
+description:
+  maxLength: 5000
+  allowHtml: false
+  requiredAttributes: [marca, modelo]
+tone: objetivo e informativo, sem promessas comerciais
+synonyms:
+  impermeavel: [à prova d'água, resistente à água]

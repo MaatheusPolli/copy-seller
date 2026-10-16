@@ -1,0 +1,11 @@
+id: amazon
+title:
+  maxLength: 200
+  mustStartWith: brand
+  forbidden: [frete grátis, best seller, promoção, "#1", mais vendido]
+description:
+  maxLength: 2000
+  allowHtml: true
+  requiredAttributes: [marca, modelo, cor]
+tone: técnico e direto, foco em especificações
+synonyms: {}

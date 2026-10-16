@@ -1,0 +1,11 @@
+id: vtex
+title:
+  maxLength: 150
+  mustStartWith: category
+  forbidden: []
+description:
+  maxLength: 10000
+  allowHtml: true
+  requiredAttributes: [marca, modelo]
+tone: institucional e confiável
+synonyms: {}

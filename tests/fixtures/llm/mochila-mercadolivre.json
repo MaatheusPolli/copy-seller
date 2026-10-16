@@ -1,0 +1,22 @@
+[
+  {
+    "model": "claude-opus-5",
+    "input": {
+      "title": "Mochila Trilha Explorer 30L Preta Impermeável Frete Grátis",
+      "shortDescription": "Mochila de nylon para trilhas.",
+      "longDescription": "Mochila Trilha Explorer 30L em nylon, cor preta.",
+      "bullets": ["30 litros", "Nylon"]
+    },
+    "usage": { "inputTokens": 900, "outputTokens": 180, "cacheReadTokens": 0, "cacheWriteTokens": 600 }
+  },
+  {
+    "model": "claude-opus-5",
+    "input": {
+      "title": "Mochila Trilha Explorer 30L Preta Impermeável de Nylon para Trilhas e Viagens",
+      "shortDescription": "Mochila de nylon impermeável para trilhas.",
+      "longDescription": "<p>Mochila Trilha Explorer 30L em nylon, cor preta.</p>",
+      "bullets": ["30 litros", "Nylon", "Impermeável"]
+    },
+    "usage": { "inputTokens": 300, "outputTokens": 190, "cacheReadTokens": 600, "cacheWriteTokens": 0 }
+  }
+]

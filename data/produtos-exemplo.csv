@@ -1,0 +1,13 @@
+sku,categoria,marca,modelo,cor,material,capacidade,voltagem,impermeavel,bivolt,sem_fio,bluetooth,inox,antiaderente,garantia,dimensoes,peso
+MOC-001,Mochila,Trilha,Explorer 30L,Preta,Nylon 600D,30 L,,sim,,,,,,,"50 x 32 x 18 cm",0.9 kg
+MOC-002,Mochila,Urbana,Commuter 20L,Cinza,Poliéster,20 L,,não,,,,,,,"45 x 30 x 14 cm",0.6 kg
+GAR-001,Garrafa Térmica,Termix,Pro 750,Azul,Aço inoxidável,750 ml,,,,,,sim,,,"26 x 7,5 cm",0.35 kg
+PAN-001,Frigideira,Cozinha Viva,Chef 24,Vermelha,Alumínio,24 cm,,,,,,,sim,12 meses,"24 x 4,5 cm",0.7 kg
+FON-001,Fone de Ouvido,Sonora,Air S2,Branco,Plástico ABS,,,,,sim,sim,,,6 meses,,0.05 kg
+FON-002,Fone de Ouvido,Sonora,Wired W1,Preto,Plástico ABS,,,,,não,não,,,,,0.03 kg
+LIQ-001,Liquidificador,Casa Forte,Turbo 900,Preto,Plástico e vidro,2 L,,,sim,,,,,12 meses,"40 x 20 x 20 cm",2.8 kg
+CAF-001,Cafeteira Elétrica,Aroma,Classic 15,Inox,Aço inoxidável,1.2 L,220 V,,não,,,sim,,12 meses,"30 x 20 x 25 cm",1.4 kg
+LAN-001,Lanterna,Trilha,Beam 500,Preta,Alumínio,,,sim,,,,,,,,0.15 kg
+TEN-001,Tênis de Corrida,Passo,Run Light,Azul,Mesh respirável,,,,,,,,,,,0.25 kg
+CAM-001,Camiseta,Algodão Bom,Básica Gola O,Branca,Algodão orgânico,,,,,,,,,,,0.18 kg
+CAI-001,Caixa de Som,Sonora,Boom Go,Verde,Plástico e tecido,,,sim,,sim,sim,,,6 meses,"18 x 7 x 7 cm",0.54 kg

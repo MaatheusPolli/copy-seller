@@ -1,49 +1,49 @@
-# CopySeller
+﻿# CopySeller
 
-Gera títulos e descrições de produto para marketplaces com Claude. Toda copy passa por **regras declarativas por canal**, **validação determinística**, **LLM-as-judge com rubrica** e **comparação A/B entre versões de prompt** com estatística.
+Gera tÃ­tulos e descriÃ§Ãµes de produto para marketplaces com Claude. Toda copy passa por **regras declarativas por canal**, **validaÃ§Ã£o determinÃ­stica**, **LLM-as-judge com rubrica** e **comparaÃ§Ã£o A/B entre versÃµes de prompt** com estatÃ­stica.
 
 > Engenharia de prompt como disciplina medida: cada resultado carrega o `promptId` que o gerou, e trocar de prompt exige vencer um A/B.
 
 ## Antes / depois
 
-Mesmo produto (`MOC-001`: mochila Trilha Explorer 30L, preta, nylon, impermeável) para o Mercado Livre (título ≤ 60, começando pela categoria, sem promessas comerciais):
+Mesmo produto (`MOC-001`: mochila Trilha Explorer 30L, preta, nylon, impermeÃ¡vel) para o Mercado Livre (tÃ­tulo â‰¤ 60, comeÃ§ando pela categoria, sem promessas comerciais):
 
-| | Título | Resultado |
+| | TÃ­tulo | Resultado |
 |---|---|---|
-| LLM sem controle | `Trilha Explorer 30L – A MELHOR mochila impermeável com FRETE GRÁTIS e garantia vitalícia!` | ✗ 89 caracteres · não começa com a categoria · "frete grátis" e "garantia vitalícia" proibidos · "garantia" não está nos dados |
-| CopySeller | `Mochila Trilha Explorer 30L Preta Impermeável Nylon 600D` | ✓ 56/60 · categoria no início · só atributos presentes nos dados |
+| LLM sem controle | `Trilha Explorer 30L â€“ A MELHOR mochila impermeÃ¡vel com FRETE GRÃTIS e garantia vitalÃ­cia!` | âœ— 89 caracteres Â· nÃ£o comeÃ§a com a categoria Â· "frete grÃ¡tis" e "garantia vitalÃ­cia" proibidos Â· "garantia" nÃ£o estÃ¡ nos dados |
+| CopySeller | `Mochila Trilha Explorer 30L Preta ImpermeÃ¡vel Nylon 600D` | âœ“ 56/60 Â· categoria no inÃ­cio Â· sÃ³ atributos presentes nos dados |
 
 ## Como funciona
 
 ```
 Produto + Perfil de canal (YAML)
-        │
-    Generator ── Claude, tool use (saída estruturada), prompt versionado
-        │
-    Validator ── puro: limites · obrigatórios · proibidos · alegações sem suporte
-        ├── corrigível   → auto-fix (truncar sem cortar palavra, remover HTML, reordenar)
-        └── não corrigível → regenerar com o motivo como feedback (máx. N, teto de custo)
-        │
-    Judge ────── Claude, rubrica 0–5 com âncoras, justificativa antes da nota
-        │
+        â”‚
+    Generator â”€â”€ Claude, tool use (saÃ­da estruturada), prompt versionado
+        â”‚
+    Validator â”€â”€ puro: limites Â· obrigatÃ³rios Â· proibidos Â· alegaÃ§Ãµes sem suporte
+        â”œâ”€â”€ corrigÃ­vel   â†’ auto-fix (truncar sem cortar palavra, remover HTML, reordenar)
+        â””â”€â”€ nÃ£o corrigÃ­vel â†’ regenerar com o motivo como feedback (mÃ¡x. N, teto de custo)
+        â”‚
+    Judge â”€â”€â”€â”€â”€â”€ Claude, rubrica 0â€“5 com Ã¢ncoras, justificativa antes da nota
+        â”‚
     { copy, issues, fixed, scores, promptId, attempts, costUsd }
 ```
 
-Decisões:
+DecisÃµes:
 
-- **Canal é dado, não código.** Adicionar um marketplace = criar um YAML em [`profiles/`](profiles).
-- **Barato primeiro.** O juiz só vê copy que já passou na validação.
-- **Ancoragem factual.** `extractClaims()` detecta alegações ("impermeável", "bivolt", "garantia"...) e exige suporte nos atributos de entrada; sinônimos são declarados por perfil.
-- **O juiz também erra.** Comparações pareadas rodam nas duas ordens (A×B e B×A): se as ordens discordam, é empate marcado como viés de posição. O prompt instrui a não premiar volume, e o relatório alerta quando as variantes diferem mais de 25% em tamanho.
+- **Canal Ã© dado, nÃ£o cÃ³digo.** Adicionar um marketplace = criar um YAML em [`profiles/`](profiles).
+- **Barato primeiro.** O juiz sÃ³ vÃª copy que jÃ¡ passou na validaÃ§Ã£o.
+- **Ancoragem factual.** `extractClaims()` detecta alegaÃ§Ãµes ("impermeÃ¡vel", "bivolt", "garantia"...) e exige suporte nos atributos de entrada; sinÃ´nimos sÃ£o declarados por perfil.
+- **O juiz tambÃ©m erra.** ComparaÃ§Ãµes pareadas rodam nas duas ordens (AÃ—B e BÃ—A): se as ordens discordam, Ã© empate marcado como viÃ©s de posiÃ§Ã£o. O prompt instrui a nÃ£o premiar volume, e o relatÃ³rio alerta quando as variantes diferem mais de 25% em tamanho.
 
 ## Canais
 
-| Canal | Título máx. | Começa com | Descrição máx. | HTML | Obrigatórios | Proibidos (exemplos) |
+| Canal | TÃ­tulo mÃ¡x. | ComeÃ§a com | DescriÃ§Ã£o mÃ¡x. | HTML | ObrigatÃ³rios | Proibidos (exemplos) |
 |---|---|---|---|---|---|---|
-| Mercado Livre | 60 | categoria | 5.000 | não | marca, modelo | frete grátis, promoção, oferta, original |
+| Mercado Livre | 60 | categoria | 5.000 | nÃ£o | marca, modelo | frete grÃ¡tis, promoÃ§Ã£o, oferta, original |
 | Amazon | 200 | marca | 2.000 | sim | marca, modelo, cor | best seller, #1, mais vendido |
-| Shopee | 120 | — | 3.000 | não | marca | whatsapp, link externo |
-| VTEX | 150 | categoria | 10.000 | sim | marca, modelo | — |
+| Shopee | 120 | â€” | 3.000 | nÃ£o | marca | whatsapp, link externo |
+| VTEX | 150 | categoria | 10.000 | sim | marca, modelo | â€” |
 
 ## Uso
 
@@ -53,20 +53,20 @@ export ANTHROPIC_API_KEY=...   # ou `ant auth login`
 ```
 
 ```bash
-# 1 produto → 3 canais, com notas do juiz
+# 1 produto â†’ 3 canais, com notas do juiz
 pnpm cli gerar --sku MOC-001 --canais mercadolivre,amazon,shopee
 
-# lote CSV → CSV, retomável (Ctrl+C e rode de novo), com teto de custo
+# lote CSV â†’ CSV, retomÃ¡vel (Ctrl+C e rode de novo), com teto de custo
 pnpm cli lote data/produtos-exemplo.csv saida.csv --max-custo 5 --juiz
 
-# avaliação de uma versão de prompt sobre o dataset
+# avaliaÃ§Ã£o de uma versÃ£o de prompt sobre o dataset
 pnpm cli avaliar --prompt v3 --saida report/eval.md
 
-# A/B entre versões de prompt
+# A/B entre versÃµes de prompt
 pnpm cli comparar --a v2 --b v3 --saida report/ab-v2-vs-v3.md
 ```
 
-UI (formulário, abas por canal, validação, notas do juiz, regenerar com feedback):
+UI (formulÃ¡rio, abas por canal, validaÃ§Ã£o, notas do juiz, regenerar com feedback):
 
 ```bash
 pnpm --filter @copy-seller/web dev    # usa a API real
@@ -75,21 +75,21 @@ pnpm --filter @copy-seller/web demo   # LLM simulado, sem chave
 
 ## Prompts versionados
 
-| id | Mudança |
+| id | MudanÃ§a |
 |---|---|
-| `v1` | Linha de base: instrução mínima, sem regras do canal |
-| `v2` | Regras do perfil explícitas + proibição de alegações fora dos dados |
-| `v3` | Ordem de atributos no título e foco em termos de busca |
+| `v1` | Linha de base: instruÃ§Ã£o mÃ­nima, sem regras do canal |
+| `v2` | Regras do perfil explÃ­citas + proibiÃ§Ã£o de alegaÃ§Ãµes fora dos dados |
+| `v3` | Ordem de atributos no tÃ­tulo e foco em termos de busca |
 
-Arquivos em [`packages/core/src/generate/prompts/`](packages/core/src/generate/prompts). O relatório A/B fica em [`report/`](report).
+Arquivos em [`packages/core/src/generate/prompts/`](packages/core/src/generate/prompts). O relatÃ³rio A/B fica em [`report/`](report).
 
 ## Como o A/B decide
 
-1. Cada produto do dataset é gerado com as duas variantes em cada canal.
-2. Copy inválida perde para a válida sem gastar o juiz.
-3. Com as duas válidas, o juiz compara nas duas ordens; só há vencedor se as ordens concordam.
-4. **Significância:** teste do sinal exato bicaudal sobre as vitórias. **Tamanho do efeito:** d de Cohen pareado sobre as notas.
-5. Sem p < 0,05, o veredito é "inconclusivo" e o prompt atual continua.
+1. Cada produto do dataset Ã© gerado com as duas variantes em cada canal.
+2. Copy invÃ¡lida perde para a vÃ¡lida sem gastar o juiz.
+3. Com as duas vÃ¡lidas, o juiz compara nas duas ordens; sÃ³ hÃ¡ vencedor se as ordens concordam.
+4. **SignificÃ¢ncia:** teste do sinal exato bicaudal sobre as vitÃ³rias. **Tamanho do efeito:** d de Cohen pareado sobre as notas.
+5. Sem p < 0,05, o veredito Ã© "inconclusivo" e o prompt atual continua.
 
 ## Testes
 
@@ -97,22 +97,40 @@ Arquivos em [`packages/core/src/generate/prompts/`](packages/core/src/generate/p
 pnpm test:cov
 ```
 
-86 testes, sem nenhuma chamada real (respostas gravadas em [`tests/fixtures/llm/`](tests/fixtures/llm)). Cobertura do core: 100% de linhas, 98% de branches; validação com 100%. Destaques:
+86 testes, sem nenhuma chamada real (respostas gravadas em [`tests/fixtures/llm/`](tests/fixtures/llm)). Cobertura do core: 100% de linhas, 98% de branches; validaÃ§Ã£o com 100%. Destaques:
 
-- título 1 caractere acima do limite; termo proibido com variação de caixa e acento; truncamento que nunca corta palavra (varredura de todos os limites);
-- "impermeável" sem suporte nos dados é sinalizado, e sinônimo do perfil não gera falso positivo;
-- viés de posição: juiz que sempre prefere a primeira candidata resulta em empate sinalizado;
-- A/B com notas sintéticas escolhe o vencedor certo e reporta o efeito;
+- tÃ­tulo 1 caractere acima do limite; termo proibido com variaÃ§Ã£o de caixa e acento; truncamento que nunca corta palavra (varredura de todos os limites);
+- "impermeÃ¡vel" sem suporte nos dados Ã© sinalizado, e sinÃ´nimo do perfil nÃ£o gera falso positivo;
+- viÃ©s de posiÃ§Ã£o: juiz que sempre prefere a primeira candidata resulta em empate sinalizado;
+- A/B com notas sintÃ©ticas escolhe o vencedor certo e reporta o efeito;
 - lote interrompido no meio (inclusive com linha cortada no checkpoint) retoma sem regerar nada.
 
 ## Estrutura
 
 ```
 profiles/            perfis de canal (YAML + Zod)
-data/                CSV de exemplo e dataset de avaliação (JSONL)
-packages/core/       domínio, validação, geração, juiz, A/B, lote
-apps/cli/            gerar · lote · avaliar · comparar
+data/                CSV de exemplo e dataset de avaliaÃ§Ã£o (JSONL)
+packages/core/       domÃ­nio, validaÃ§Ã£o, geraÃ§Ã£o, juiz, A/B, lote
+apps/cli/            gerar Â· lote Â· avaliar Â· comparar
 apps/web/            React + Vite + Tailwind
-tests/               unit + integração com LLM gravado
-report/              relatórios gerados (commitados como evidência)
+tests/               unit + integraÃ§Ã£o com LLM gravado
+report/              relatÃ³rios gerados (commitados como evidÃªncia)
 ```
+
+
+## Licença
+
+### Uso Pessoal
+Este projeto é licenciado sob a **Licença MIT** para uso pessoal, educacional e não comercial.
+
+### Uso Comercial
+Se você deseja usar este projeto comercialmente, deve obter uma licença comercial do autor.
+
+**Uso comercial inclui:**
+- Incorporar em um produto comercial
+- Oferecer como serviço
+- Usar em atividades com fins lucrativos
+- Implantação empresarial
+
+**Para obter uma licença comercial:**
+Email: ma.polli@hotmail.com

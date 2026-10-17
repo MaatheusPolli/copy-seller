@@ -34,3 +34,6 @@ logs/
 # Ignorar OS
 .DS_Store
 Thumbs.db
+
+# Post do LinkedIn (rascunho local, nunca versionar)
+docs/post-linkedin.md
